@@ -229,10 +229,14 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case If(condition=condition, true=true, false=false):
             """ TODO: Implement. """
-            if(condition):
-                return true
+            condition_value, condition_type, new_state = evaluate(condition, state)
+
+            if condition_type != Boolean():
+                raise InterpTypeError(f"Condition must be a boolean expression.")
+            if condition_value:
+                return evaluate(true, new_state)
             else:
-                return false
+                return evaluate(false, new_state)
 
         case Lt(left=left, right=right):
             left_value, left_type, new_state = evaluate(left, state)
@@ -367,9 +371,15 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case While(condition=condition, body=body):
             """ TODO: Implement. """
-            # while(condition):
-            #     body
-            # return
+            condition_value, condition_type, new_state = evaluate(condition, state)
+            body_value, body_type, new_state = None, None, None
+            if condition_type != Boolean():
+                raise InterpTypeError(f"Condition must be a boolean expression.")
+
+            while condition_value:
+                body_value, body_type, new_state = evaluate(body, new_state)
+                condition_value, condition_type, new_state = evaluate(condition, new_state)
+            return (None, Unit(), new_state)
 
         case _:
             raise InterpSyntaxError("Unhandled!")
