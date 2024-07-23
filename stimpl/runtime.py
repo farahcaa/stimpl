@@ -24,8 +24,6 @@ class State(object):
 
     def get_value(self, variable_name) -> Any:
         """ TODO: maybe done """
-        if self is None:
-            return None
         if self.variable_name == variable_name:
             return self.value
         elif self.next_state is not None:
@@ -375,7 +373,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
         case While(condition=condition, body=body):
             """ TODO: Implement. """
             condition_value, condition_type, new_state = evaluate(condition, state)
-            body_value, body_type, new_state = None, None, None
+            body_value, body_type, new_state = None, Unit(), state
             if condition_type != Boolean():
                 raise InterpTypeError(f"Condition must be a boolean expression.")
 
