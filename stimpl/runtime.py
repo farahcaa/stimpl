@@ -162,7 +162,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             match left_type:
                 case FloatingPoint():
                     result = left_result * right_result
-                case Integer(0):
+                case Integer():
                     result = int(left_result * right_result)
                 case _:
                     raise InterpTypeError(f"""Cannot add {left_type}s""")
@@ -181,7 +181,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             match left_type:
                 case FloatingPoint():
                     result = left_result / right_result
-                case Integer(0):
+                case Integer():
                     result = int(left_result / right_result)
                 case _:
                     raise InterpTypeError(f"""Cannot Divide {left_type}s""")
