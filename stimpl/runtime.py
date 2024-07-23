@@ -24,8 +24,9 @@ class State(object):
 
     def get_value(self, variable_name) -> Any:
         """ TODO: maybe done """
-        variable_value, variable_type = self.value
-        return State(variable_value,variable_type )
+        if self.variable_name == variable_name:
+            return self.value
+        return self.next_state.get_value(variable_name)
 
     def __repr__(self) -> str:
         return f"{self.variable_name}: {self.value}, " + repr(self.next_state)
@@ -81,7 +82,9 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Sequence(exprs=exprs) | Program(exprs=exprs):
             """ TODO: mayb e done. """
-            return (exprs, state)
+            for expr in exprs:
+                expr_result, expr_type, state = evaluate(expr, state)
+            return (expr_result, expr_type, state)
 
         case Variable(variable_name=variable_name):
             value = state.get_value(variable_name)
@@ -177,20 +180,20 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             return (result, left_type, new_state)
 
         case And(left=left, right=right):
-            left_value, left_type, new_state = evaluate(left, state)
-            right_value, right_type, new_state = evaluate(right, new_state)
+             left_value, left_type, new_state = evaluate(left, state)
+             right_value, right_type, new_state = evaluate(right, new_state)
 
-            if left_type != right_type:
+             if left_type != right_type:
                 raise InterpTypeError(f"""Mismatched types for And:
             Cannot evaluate {left_type} and {right_type}""")
-            match left_type:
+             match left_type:
                 case Boolean():
                     result = left_value and right_value
                 case _:
                     raise InterpTypeError(
                         "Cannot perform logical and on non-boolean operands.")
 
-            return (result, left_type, new_state)
+             return (result, left_type, new_state)
 
         case Or(left=left, right=right):
             """ TODO: Implement. """
