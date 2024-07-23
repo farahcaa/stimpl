@@ -85,13 +85,10 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Sequence(exprs=exprs) | Program(exprs=exprs):
             """ TODO: mayb e done. """
-            last_result = None
-            last_type = None
-            for expr in reversed(exprs):
-                expr_result, expr_type, new_state = evaluate(expr, state)
-                last_result = expr_result
-                last_type = expr_type
-            return (last_result, last_type, new_state)
+            result_value, result_type, new_state = None, None, state
+            for expr in exprs:
+                result_value, result_type, new_state = evaluate(expr, new_state)
+            return (result_value, result_type, new_state)
 
         case Variable(variable_name=variable_name):
             value = state.get_value(variable_name)
