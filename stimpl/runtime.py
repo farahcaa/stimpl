@@ -380,7 +380,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             while condition_value:
                 body_value, body_type, new_state = evaluate(body, new_state)
                 condition_value, condition_type, new_state = evaluate(condition, new_state)
-            return (None, Unit(), new_state)
+            return (condition_value, condition_type, new_state)
 
         case _:
             raise InterpSyntaxError("Unhandled!")
