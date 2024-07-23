@@ -24,6 +24,8 @@ class State(object):
 
     def get_value(self, variable_name) -> Any:
         """ TODO: maybe done """
+        if self is None:
+            return None
         if self.variable_name == variable_name:
             return self.value
         elif self.next_state is not None:
