@@ -221,8 +221,11 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
         
         case Not(expr=expr):
             """ TODO: Implement. """
-            express, new_state = evaluate(expr,state)
-            return (not express, new_state)
+            if not isinstance(expr, BooleanLiteral):
+                raise InterpTypeError(f"Cannot perform logical not on {expr} type.")
+            else:
+                express,express_type, new_state = evaluate(expr,state)
+            return (not express,Boolean(), new_state)
 
         case If(condition=condition, true=true, false=false):
             """ TODO: Implement. """
