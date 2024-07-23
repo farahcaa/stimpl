@@ -85,7 +85,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Sequence(exprs=exprs) | Program(exprs=exprs):
             """ TODO: mayb e done. """
-            result_value, result_type, new_state = None, None, state
+            result_value, result_type, new_state = None, Unit(), state
             for expr in exprs:
                 result_value, result_type, new_state = evaluate(expr, new_state)
             return (result_value, result_type, new_state)
