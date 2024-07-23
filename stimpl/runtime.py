@@ -28,7 +28,8 @@ class State(object):
             return self.value
         elif self.next_state == None:
             return None
-        return self.next_state.get_value(variable_name)
+        else:
+            return self.next_state.get_value(variable_name)
 
     def __repr__(self) -> str:
         return f"{self.variable_name}: {self.value}, " + repr(self.next_state)
