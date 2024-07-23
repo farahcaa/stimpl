@@ -235,9 +235,9 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             if condition_type != Boolean():
                 raise InterpTypeError(f"Condition must be a boolean expression.")
             if condition_value:
-                return evaluate(true, Boolean(), new_state)
+                return evaluate(true, new_state)
             else:
-                return evaluate(false, Boolean(), new_state)
+                return evaluate(false, new_state)
 
         case Lt(left=left, right=right):
             left_value, left_type, new_state = evaluate(left, state)
