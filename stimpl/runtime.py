@@ -189,7 +189,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                     raise InterpTypeError(
                         "Cannot perform logical and on non-boolean operands.")
 
-            return (result, left_type, new_state)
+            return (result, new_state)
 
         case Or(left=left, right=right):
             """ TODO: Implement. """
@@ -206,7 +206,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                     raise InterpTypeError(
                         "Cannot perform logical or on non-boolean operands.")
 
-            return (result, left_type, new_state)
+            return (result, new_state)
         
         case Not(expr=expr):
             """ TODO: Implement. """
@@ -215,7 +215,10 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case If(condition=condition, true=true, false=false):
             """ TODO: Implement. """
-            pass
+            if(condition):
+                return true
+            else:
+                return false
 
         case Lt(left=left, right=right):
             left_value, left_type, new_state = evaluate(left, state)
