@@ -142,7 +142,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             Cannot Subtract {left_type} from {right_type}""")
 
             match left_type:
-                case Integer() | String() | FloatingPoint():
+                case Integer() | FloatingPoint():
                     result = left_result - right_result
                 case _:
                     raise InterpTypeError(f"""Cannot Subtract {left_type}s""")
