@@ -226,7 +226,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 raise InterpTypeError(f"Cannot perform logical not on {expr} type.")
             else:
                 express,express_type, new_state = evaluate(expr,state)
-            return (not express,Boolean(), new_state)
+            return ( not express, express_type, new_state)
 
         case If(condition=condition, true=true, false=false):
             """ TODO: Implement. """
@@ -235,9 +235,9 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             if condition_type != Boolean():
                 raise InterpTypeError(f"Condition must be a boolean expression.")
             if condition_value:
-                return evaluate(true, new_state)
+                return evaluate(true, Boolean(), new_state)
             else:
-                return evaluate(false, new_state)
+                return evaluate(false, Boolean(), new_state)
 
         case Lt(left=left, right=right):
             left_value, left_type, new_state = evaluate(left, state)
