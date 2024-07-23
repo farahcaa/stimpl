@@ -24,7 +24,7 @@ class State(object):
 
     def get_value(self, variable_name) -> Any:
         """ TODO: maybe done """
-        return State(self.variable_name,self.value)
+        return State(self.value, variable_name)
 
     def __repr__(self) -> str:
         return f"{self.variable_name}: {self.value}, " + repr(self.next_state)
@@ -79,8 +79,8 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             return (printable_value, printable_type, new_state)
 
         case Sequence(exprs=exprs) | Program(exprs=exprs):
-            """ TODO: maybe done. """
-            return (1,exprs,exprs)
+            """ TODO: mayb e done. """
+            return (exprs, state)
 
         case Variable(variable_name=variable_name):
             value = state.get_value(variable_name)
@@ -350,7 +350,9 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case While(condition=condition, body=body):
             """ TODO: Implement. """
-            pass
+            while(condition):
+                body
+            return
 
         case _:
             raise InterpSyntaxError("Unhandled!")
