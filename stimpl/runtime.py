@@ -177,8 +177,10 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             Cannot Divide {left_type} to {right_type}""")
 
             match left_type:
-                case Integer() | FloatingPoint():
+                case FloatingPoint():
                     result = left_result / right_result
+                case Integer(0):
+                    result = int(left_result / right_result)
                 case _:
                     raise InterpTypeError(f"""Cannot Divide {left_type}s""")
             return (result, left_type, new_state)
