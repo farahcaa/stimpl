@@ -87,7 +87,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
             """ TODO: mayb e done. """
             last_result = None
             last_type = None
-            for expr in exprs:
+            for expr in reversed(exprs):
                 expr_result, expr_type, new_state = evaluate(expr, state)
                 last_result = expr_result
                 last_type = expr_type
