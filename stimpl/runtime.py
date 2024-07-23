@@ -26,11 +26,11 @@ class State(object):
         """ TODO: maybe done """
         if self.variable_name == variable_name:
             return self.value
-        elif self.next_state == None:
-            return None
-        else:
+        elif self.next_state is not None:
             return self.next_state.get_value(variable_name)
-
+        else:
+            return None
+        
     def __repr__(self) -> str:
         return f"{self.variable_name}: {self.value}, " + repr(self.next_state)
 
