@@ -24,6 +24,7 @@ class State(object):
 
     def get_value(self, variable_name) -> Any:
         """ TODO: maybe done """
+        #Iterate through the state to find the variable_name and return the value if found otherwise return None
         if self.variable_name == variable_name:
             return self.value
         elif self.next_state is not None:
@@ -85,6 +86,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Sequence(exprs=exprs) | Program(exprs=exprs):
             """ TODO: mayb e done. """
+            #update state for each expression in the sequence and return the last expression value
             result_value, result_type, new_state = None, Unit(), state
             for expr in exprs:
                 result_value, result_type, new_state = evaluate(expr, new_state)
@@ -133,6 +135,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Subtract(left=left, right=right):
             """ TODO: Implement. """
+            # set starting result to 0 evaluate left and right expressions type check them then subtract them
             result = 0
             left_result, left_type, new_state = evaluate(left, state)
             right_result, right_type, new_state = evaluate(right, new_state)
@@ -151,6 +154,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Multiply(left=left, right=right):
             """ TODO: Implement. """
+            # set starting result to 0 evaluate left and right expressions type check them then Multiply them depending on the type
             result = 0
             left_result, left_type, new_state = evaluate(left, state)
             right_result, right_type, new_state = evaluate(right, new_state)
@@ -170,6 +174,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Divide(left=left, right=right):
             """ TODO: Implement. """
+            # set starting result to 0 evaluate left and right expressions type check them then Divide them depending on the type
             result = 0
             left_result, left_type, new_state = evaluate(left, state)
             right_result, right_type, new_state = evaluate(right, new_state)
@@ -205,6 +210,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Or(left=left, right=right):
             """ TODO: Implement. """
+            # evaluate left and right expressions type check them then perform logical or on them
             left_value, left_type, new_state = evaluate(left, state)
             right_value, right_type, new_state = evaluate(right, new_state)
 
@@ -222,6 +228,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
         
         case Not(expr=expr):
             """ TODO: Implement. """
+            # check if the expression is a boolean literal if not raise an error otherwise return the negation of the expression
             if not isinstance(expr, BooleanLiteral):
                 raise InterpTypeError(f"Cannot perform logical not on {expr} type.")
             else:
@@ -230,6 +237,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case If(condition=condition, true=true, false=false):
             """ TODO: Implement. """
+            # evaluate the condition and check if it is a boolean literal if not raise an error otherwise evaluate the true or false expression depending on the condition
             condition_value, condition_type, new_state = evaluate(condition, state)
 
             if condition_type != Boolean():
@@ -262,6 +270,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Lte(left=left, right=right):
             """ TODO: Implement. """
+            # evaluate left and right expressions type check them then perform less than or equal to on them
             left_value, left_type, new_state = evaluate(left, state)
             right_value, right_type, new_state = evaluate(right, new_state)
 
@@ -284,6 +293,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Gt(left=left, right=right):
             """ TODO: Implement. """
+            # evaluate left and right expressions type check them then perform greater than on them
             left_value, left_type, new_state = evaluate(left, state)
             right_value, right_type, new_state = evaluate(right, new_state)
 
@@ -306,6 +316,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Gte(left=left, right=right):
             """ TODO: Implement. """
+            # evaluate left and right expressions type check them then perform greater than or equal to on them
             left_value, left_type, new_state = evaluate(left, state)
             right_value, right_type, new_state = evaluate(right, new_state)
 
@@ -328,6 +339,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Eq(left=left, right=right):
             """ TODO: Implement. """
+            # evaluate left and right expressions type check them then perform equality on them
             left_value, left_type, new_state = evaluate(left, state)
             right_value, right_type, new_state = evaluate(right, new_state)
 
@@ -350,6 +362,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case Ne(left=left, right=right):
             """ TODO: Implement. """
+            # evaluate left and right expressions type check them then perform not equal to on them
             left_value, left_type, new_state = evaluate(left, state)
             right_value, right_type, new_state = evaluate(right, new_state)
 
@@ -372,6 +385,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
 
         case While(condition=condition, body=body):
             """ TODO: Implement. """
+            # evaluate the condition and check if it is a boolean literal if not raise an error otherwise evaluate the body expression and condition until the condition is false
             condition_value, condition_type, new_state = evaluate(condition, state)
             body_value, body_type, new_state = None, Unit(), state
             if condition_type != Boolean():
