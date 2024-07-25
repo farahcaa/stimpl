@@ -253,7 +253,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 case Integer() | Boolean() | String() | FloatingPoint():
                     result = left_value < right_value
                 case Unit():
-                    result = False
+                    result = left_value < right_value
                 case _:
                     raise InterpTypeError(
                         f"Cannot perform < on {left_type} type.")
@@ -275,7 +275,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 case Integer() | Boolean() | String() | FloatingPoint():
                     result = left_value <= right_value
                 case Unit():
-                    result = False
+                    result = left_value <= right_value
                 case _:
                     raise InterpTypeError(
                         f"Cannot perform <= on {left_type} type.")
@@ -297,7 +297,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 case Integer() | Boolean() | String() | FloatingPoint():
                     result = left_value > right_value
                 case Unit():
-                    result = False
+                    result = left_value > right_value
                 case _:
                     raise InterpTypeError(
                         f"Cannot perform > on {left_type} type.")
@@ -319,7 +319,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 case Integer() | Boolean() | String() | FloatingPoint():
                     result = left_value >= right_value
                 case Unit():
-                    result = False
+                    result = left_value >= right_value
                 case _:
                     raise InterpTypeError(
                         f"Cannot perform >= on {left_type} type.")
@@ -341,7 +341,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 case Integer() | Boolean() | String() | FloatingPoint():
                     result = left_value == right_value
                 case Unit():
-                    result = False
+                    result = left_value == right_value
                 case _:
                     raise InterpTypeError(
                         f"Cannot perform == on {left_type} type.")
@@ -363,7 +363,7 @@ def evaluate(expression: Expr, state: State) -> Tuple[Optional[Any], Type, State
                 case Integer() | Boolean() | String() | FloatingPoint():
                     result = left_value != right_value
                 case Unit():
-                    result = False
+                    result = left_value != right_value
                 case _:
                     raise InterpTypeError(
                         f"Cannot perform != on {left_type} type.")
